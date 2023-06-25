@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  slackbot:
+    container_name: slack-lunchbot
+    build:
+      dockerfile: Dockerfile
+    pull_policy: build
+    env_file:
+      - stack.env
+    restart: unless-stopped
+    network_mode: "host"
