@@ -24,12 +24,14 @@ app.action('generate-random-restaurant', async ({ ack, say }) => {
   const reactions = message?.reactions || [];
 
   const maxCount = Math.max(...(reactions.map((item) => item.count) as number[]));
+
   const itemsWithMaxCount = reactions.filter((item) => item.count === maxCount);
+
   const selectedItem = itemsWithMaxCount[Math.floor(Math.random() * itemsWithMaxCount.length)];
 
-  const category = restaurants[selectedItem.name!];
+  const category = Object.keys(restaurants).find((key) => restaurants[key].emoji === selectedItem.name);
 
-  const restaurant = category.names[Math.floor(Math.random() * category.names.length)];
+  const restaurant = restaurants[category!].names[Math.floor(Math.random() * restaurants[category!].names.length)];
 
   await app.client.chat.delete({
     channel: currentMessage?.channel!,
