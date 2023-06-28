@@ -17,7 +17,7 @@ let currentMessage: ChatPostMessageResponse | undefined = undefined;
 app.action('generate-random-restaurant', async ({ ack, say, body }) => {
   await ack();
 
-  if (originalSenderId === body.user.id) {
+  if (originalSenderId !== body.user.id) {
     say({
       channel: currentMessage?.channel!,
       text: `<@${(body.user as any).id}> näpit irti siitä napista!`,
